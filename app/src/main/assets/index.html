@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleverTap Integration</title>
+    <script type="text/javascript">
+        var clevertap = { "accountId": "Z44-Z4K-K65Z", "region": "in1" };
+        (function () {
+            var wzrk = document.createElement('script');
+            wzrk.type = 'text/javascript'; wzrk.async = true;
+            wzrk.src = "https://static.clevertap.com/js/a.js";
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wzrk, s);
+        })();
+
+        function loginUser() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+            var dob = document.getElementById("dob").value;
+
+            clevertap.onUserLogin.push({
+                "Site": {
+                    "Name": name,
+                    "Email": email,
+                    "Phone": phone,
+                    "DOB": new Date(dob)
+                }
+            });
+            console.log("User Login Event Triggered");
+        }
+
+        function pushProfile() {
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var phone = document.getElementById("phone").value;
+        var dob = document.getElementById("dob").value;
+
+        clevertap.profile.push({
+        "Site": {
+            "Name": name,
+            "Email": email,
+            "Phone": phone,
+            "DOB": new Date(dob)
+            }
+            });
+            alert("Profile updated successfully");
+            }
+
+        function askForPush() {
+           clevertap.notifications.push({
+                 "titleText":'Would you like to receive Push Notifications?',
+                  "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+                  "okButtonText":'Sign me up!',
+                  "rejectButtonText":'No thanks',
+                  "askAgainTimeInSeconds":5,
+                  "okButtonColor":'#f28046'});
+
+           alert("Push Notification Request Triggered");
+        }
+
+        function raiseEvent() {
+            clevertap.event.push("CustomEvent", {
+                "event_name": "Test Event",
+                "date_time": new Date(),
+                "string_property": "Sample String",
+                "integer_property": 123,
+                "float_property": 456.78
+            });
+            alert("Custom Event Triggered");
+        }
+
+    </script>
+</head>
+<body>
+<h1>Welcome to CleverTap Integration</h1>
+<form>
+    <label>Name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label>Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label>Phone:</label><br>
+    <input type="text" id="phone" name="phone"><br>
+    <label>Date of Birth:</label><br>
+    <input type="date" id="dob" name="dob"><br><br>
+    <button type="button" onclick="loginUser()">Login</button>
+    <button type="button" onclick="pushProfile()">Profile Push</button>
+    <button type="button" onclick="askForPush()">Ask For Push</button>
+    <button type="button" onclick="raiseEvent()">Raise Event</button>
+
+</form>
+</body>
+</html>
